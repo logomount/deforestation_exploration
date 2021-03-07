@@ -93,29 +93,3 @@ SELECT
 FROM country_forestation
 WHERE year = 2016 AND forestation_percent >= 75
 ORDER BY 3 DESC
-
-
-WITH forestion_quartiles AS (
-  SELECT
-        NTILE(4) OVER (ORDER BY forestation_percent) AS quartile,
-        country_name,
-        region,
-        forestation_percent
-  FROM country_forestation
-  WHERE year = 2016 AND forestation_percent IS NOT NULL
-  ORDER BY 1 DESC
-)
-
-SELECT
-      quartile,
-      COUNT(*)
-FROM forestion_quartiles
-GROUP BY 1
-ORDER BY 1 DESC
-
-SELECT
-      country_name,
-      region,
-      forestation_percent
-FROM forestion_quartiles
-WHERE quartile = 1
